@@ -184,7 +184,7 @@ export default class MonitorScreen extends EventEmitter {
 
         // Set iframe attributes
         // PROD
-        iframe.src = 'https://2-dos.vercel.app/';
+        iframe.src = 'https://danielcook.org/';
         /**
          * Use dev server is query params are present
          *
@@ -278,7 +278,7 @@ export default class MonitorScreen extends EventEmitter {
             innerShadow: {
                 texture: textures.monitorShadowTexture,
                 blending: THREE.NormalBlending,
-                opacity: 1,
+                opacity: 0.55,
                 offset: 5,
             },
             video: {
@@ -516,7 +516,7 @@ export default class MonitorScreen extends EventEmitter {
 
             const opacity = 1 / (distance / 10000);
 
-            const DIM_FACTOR = 0.7;
+            const DIM_FACTOR = 0.3;
 
             // @ts-ignore
             this.dimmingPlane.material.opacity =

@@ -31,27 +31,16 @@ export default class Decor {
     createRaycaster() {
         window.addEventListener('mousedown', (event) => {
             event.preventDefault();
-            console.log(this.camera.instance.position);
 
-            console.log(this.mouse);
             const ray = new THREE.Raycaster();
-            ray.setFromCamera(
-                { x: this.mouse.x, y: this.mouse.y },
-                this.camera.instance
+            const ndc = new THREE.Vector2(
+                (this.mouse.x / window.innerWidth) * 2 - 1,
+                -(this.mouse.y / window.innerHeight) * 2 + 1
             );
-            console.log(ray);
+            ray.setFromCamera(ndc, this.camera.instance);
+
             const intersects = ray.intersectObjects(this.scene.children);
             console.log(intersects);
-            // this.raycaster.setFromCamera(this.mouse, this.camera.instance);
-            // const intersects = this.raycaster.intersectObjects(
-            //     this.scene.children
-            // );
-            // if (intersects.length > 0) {
-            //     const hb = this.hitboxes[intersects[0].object.name];
-            //     if (hb) {
-            //         hb.action();
-            //     }
-            // }
         });
     }
 
@@ -74,13 +63,10 @@ export default class Decor {
     ) {
         const wireframeOptions = RENDER_WIREFRAME
             ? {
-                  //   wireframe: true,
-                  //   wireframeLinewidth: 50,
                   opacity: 1,
               }
             : {};
 
-        // create hitbox material
         const hitboxMaterial = new THREE.MeshBasicMaterial({
             color: 0xff0000,
             side: THREE.DoubleSide,
@@ -90,22 +76,15 @@ export default class Decor {
             ...wireframeOptions,
         });
 
-        // create hitbox
         const hitbox = new THREE.Mesh(
-            new THREE.BoxBufferGeometry(size.x, size.y, size.z),
+            new THREE.BoxGeometry(size.x, size.y, size.z),
             hitboxMaterial
         );
 
-        // set name of the hitbox object
         hitbox.name = name;
-
-        // set hitbox position
         hitbox.position.copy(position);
-
-        // add hitbox to scene
         this.scene.add(hitbox);
 
-        // add hitbox to hitboxes
         this.hitboxes = {
             ...this.hitboxes,
             [name]: {
