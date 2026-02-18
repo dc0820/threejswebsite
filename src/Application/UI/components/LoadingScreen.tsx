@@ -174,7 +174,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                         </div>
                     </div>
                     <div style={styles.body} className="loading-screen-body">
-                        <p>DCP S15 1998-2023 Special UC132S</p>
+                        <p>DCP S15 1998 Special UC132S</p>
                         <div style={styles.spacer} />
                         {showBiosInfo && (
                             <>
@@ -207,7 +207,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                             <p>
                                 All Content Loaded, launching{' '}
                                 <b style={styles.green}>
-                                    'Daniel Cook Threejs Portfolio Website'
+                                    'Daniel Cook Portfolio Showcase'
                                 </b>{' '}
                                 V1.0
                             </p>
@@ -239,16 +239,13 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                     <p>But do enjoy what I have done so far :)</p>
                     <div style={styles.spacer} />
                     <div style={styles.spacer} /> */}
-                    <p>Daniel Cook Threejs Portfolio Website</p>
+                    <p>Daniel Cook Portfolio Showcase</p>
                     {mobileWarning && (
                         <>
                             <br />
                             <b>
                                 <p style={styles.warning}>
-                                    WARNING: This experience is best viewed on
-                                </p>
-                                <p style={styles.warning}>
-                                    a desktop or laptop computer.
+                                    WARNING: CLICK SCREEN ONLY
                                 </p>
                             </b>
                             <br />
@@ -268,6 +265,16 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                     >
                         <div className="bios-start-button" onClick={start}>
                             <p>START</p>
+                        </div>
+                        <div
+                            className="bios-start-button"
+                            style={{ marginLeft: '12px' }}
+                            onClick={() =>
+                                (window.location.href =
+                                    'https://danos-website-gsxi.vercel.app/')
+                            }
+                        >
+                            <p>SCREEN ONLY</p>
                         </div>
                     </div>
                 </div>
