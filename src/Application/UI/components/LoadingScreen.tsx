@@ -245,7 +245,8 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                             <br />
                             <b>
                                 <p style={styles.warning}>
-                                    WARNING: CLICK SCREEN ONLY
+                                    Mobile device detected. For the best
+                                    experience, click SCREEN ONLY.
                                 </p>
                             </b>
                             <br />
