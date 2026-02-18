@@ -207,7 +207,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                             <p>
                                 All Content Loaded, launching{' '}
                                 <b style={styles.green}>
-                                    'Daniel Cook Threejs Portfolio Showcase'
+                                    'Daniel Cook Threejs Portfolio Website'
                                 </b>{' '}
                                 V1.0
                             </p>
@@ -239,7 +239,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                     <p>But do enjoy what I have done so far :)</p>
                     <div style={styles.spacer} />
                     <div style={styles.spacer} /> */}
-                    <p>Daniel Cook Threejs Portfolio Showcase 2023</p>
+                    <p>Daniel Cook Threejs Portfolio Website 2023-Current</p>
                     {mobileWarning && (
                         <>
                             <br />
@@ -290,7 +290,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                             <a
                                 style={styles.link}
                                 href={
-                                    'https://github.com/henryjeff/portfolio-website/issues/6'
+                                    'https://github.com/dc0820/'
                                 }
                             >
                                 bug in firefox
