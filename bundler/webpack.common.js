@@ -60,14 +60,15 @@ module.exports = {
                     filename: 'assets/images/[hash][ext]',
                 },
             },
-            // Audio
+            // Audio (Webpack 5 asset modules)
             {
-                test: /\.(mp3|wav)$/,
-                loader: 'file-loader',
-                options: {
-                    name: '[path][name].[ext]',
-                },
+            test: /\.(mp3|wav)$/i,
+            type: "asset/resource",
+            generator: {
+                filename: "assets/audio/[name].[contenthash][ext]",
             },
+            },
+
             // Fonts
             {
                 test: /\.(ttf|eot|woff|woff2)$/,

@@ -47,7 +47,7 @@ export default class Renderer {
         });
         // Settings
         // this.instance.physicallyCorrectLights = true;
-        this.instance.outputEncoding = THREE.sRGBEncoding;
+        this.instance.outputColorSpace = THREE.SRGBColorSpace;
         // this.instance.toneMapping = THREE.ACESFilmicToneMapping;
         // this.instance.toneMappingExposure = 0.9;
         this.instance.setSize(this.sizes.width, this.sizes.height);
