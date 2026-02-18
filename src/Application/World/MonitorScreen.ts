@@ -10,6 +10,13 @@ import EventEmitter from '../Utils/EventEmitter';
 
 const SCREEN_SIZE = { w: 1280, h: 1024 };
 const IFRAME_PADDING = 32;
+const SCREEN_BRIGHTNESS = {
+    smudgeOpacity: 0.03,
+    innerShadowOpacity: 0.12,
+    video1Opacity: 0.18,
+    video2Opacity: 0.03,
+    dimFactor: 0.04,
+};
 const IFRAME_SIZE = {
     w: SCREEN_SIZE.w - IFRAME_PADDING,
     h: SCREEN_SIZE.h - IFRAME_PADDING,
@@ -201,6 +208,7 @@ export default class MonitorScreen extends EventEmitter {
         iframe.style.padding = IFRAME_PADDING + 'px';
         iframe.style.boxSizing = 'border-box';
         iframe.style.opacity = '1';
+        iframe.style.filter = 'brightness(1.2) contrast(1.08) saturate(1.05)';
         iframe.className = 'jitter';
         iframe.id = 'computer-screen';
         iframe.frameBorder = '0';
@@ -272,25 +280,25 @@ export default class MonitorScreen extends EventEmitter {
             smudge: {
                 texture: textures.monitorSmudgeTexture,
                 blending: THREE.AdditiveBlending,
-                opacity: 0.12,
+                opacity: SCREEN_BRIGHTNESS.smudgeOpacity,
                 offset: 24,
             },
             innerShadow: {
                 texture: textures.monitorShadowTexture,
                 blending: THREE.NormalBlending,
-                opacity: 0.55,
+                opacity: SCREEN_BRIGHTNESS.innerShadowOpacity,
                 offset: 5,
             },
             video: {
                 texture: this.videoTextures['video-1'],
                 blending: THREE.AdditiveBlending,
-                opacity: 0.5,
+                opacity: SCREEN_BRIGHTNESS.video1Opacity,
                 offset: 10,
             },
             video2: {
                 texture: this.videoTextures['video-2'],
                 blending: THREE.AdditiveBlending,
-                opacity: 0.1,
+                opacity: SCREEN_BRIGHTNESS.video2Opacity,
                 offset: 15,
             },
         };
@@ -516,7 +524,7 @@ export default class MonitorScreen extends EventEmitter {
 
             const opacity = 1 / (distance / 10000);
 
-            const DIM_FACTOR = 0.3;
+            const DIM_FACTOR = SCREEN_BRIGHTNESS.dimFactor;
 
             // @ts-ignore
             this.dimmingPlane.material.opacity =
