@@ -152,7 +152,9 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                                     }}
                                 >
                                     <p>Click start to begin</p>
-                                    <span style={styles.dogLoader}>{computerSequence}</span>
+                                    <span style={styles.loadingCursor}>
+                                        <span className="blinking-cursor" />
+                                    </span>
                                 </div>
                                 <div
                                     style={{
@@ -282,6 +284,12 @@ const styles: StyleSheetCSS = {
         alignItems: 'center',
         textAlign: 'left',
         letterSpacing: 2,
+    },
+    loadingCursor: {
+        minWidth: 16,
+        display: 'inline-flex',
+        alignItems: 'center',
+        paddingBottom: 2,
     },
     spacer: {
         height: 16,
