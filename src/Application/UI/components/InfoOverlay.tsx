@@ -108,12 +108,12 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
         <div style={styles.wrapper}>
             {nameText !== '' && (
                 <div style={styles.container}>
-                    <p>{nameText}</p>
+                    <p style={styles.text}>{nameText}</p>
                 </div>
             )}
             {titleText !== '' && (
                 <div style={styles.container}>
-                    <p>{titleText}</p>
+                    <p style={styles.text}>{titleText}</p>
                 </div>
             )}
             {timeText !== '' && (
@@ -125,7 +125,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
                             styles.lastRowChild
                         )}
                     >
-                        <p>{timeText}</p>
+                        <p style={styles.text}>{timeText}</p>
                     </div>
                     {volumeVisible && (
                         <div style={styles.lastRowChild}>
@@ -145,20 +145,30 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
 
 const styles: StyleSheetCSS = {
     container: {
-        background: 'black',
+        background:
+            'linear-gradient(145deg, rgba(4, 6, 10, 0.95), rgba(2, 2, 2, 0.88))',
+        border: '1px solid rgba(176, 255, 255, 0.22)',
+        backdropFilter: 'blur(2px)',
         padding: 4,
-        paddingLeft: 16,
-        paddingRight: 16,
+        paddingLeft: 14,
+        paddingRight: 14,
         textAlign: 'center',
         display: 'flex',
         marginBottom: 4,
+        borderRadius: 2,
         boxSizing: 'border-box',
+    },
+    text: {
+        color: '#e9ffff',
+        textShadow: '0 0 8px rgba(119, 255, 255, 0.28)',
+        letterSpacing: 0.9,
     },
     wrapper: {
         position: 'absolute',
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
+        paddingTop: 4,
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
     },

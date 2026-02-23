@@ -5,6 +5,10 @@ type LoadingProps = {};
 
 const LoadingScreen: React.FC<LoadingProps> = () => {
     const [overlayOpacity, setLoadingOverlayOpacity] = useState(1);
+    const [progress, setProgress] = useState(0);
+    const [loaded, setLoaded] = useState(0);
+    const [toLoad, setToLoad] = useState(0);
+    const [showStartPrompt, setShowStartPrompt] = useState(false);
     const [firefoxPopupOpacity, setFirefoxPopupOpacity] = useState(0);
     const [webGLErrorOpacity, setWebGLErrorOpacity] = useState(0);
     const [firefoxError, setFirefoxError] = useState(false);
@@ -42,6 +46,20 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
         return () => {
             window.clearInterval(interval);
         };
+    }, []);
+
+    useEffect(() => {
+        eventBus.on('loadedSource', (data) => {
+            setProgress(data.progress);
+            setLoaded(data.loaded);
+            setToLoad(data.toLoad);
+
+            if (data.progress >= 1) {
+                setTimeout(() => {
+                    setShowStartPrompt(true);
+                }, 300);
+            }
+        });
     }, []);
 
     useEffect(() => {
@@ -90,52 +108,76 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
             {!firefoxError && !webGLError && (
                 <div style={Object.assign({}, styles.popupContainer, { opacity: 1 })}>
                     <div style={styles.startPopup}>
-                        <p>Daniel Cook Portfolio Showcase</p>
-                        {mobileWarning && (
+                        {!showStartPrompt ? (
                             <>
-                                <br />
-                                <b>
-                                    <p style={styles.warning}>
-                                        Mobile device detected. For the best experience, click
-                                        SCREEN ONLY.
-                                    </p>
-                                </b>
-                                <br />
+                                <p>LOADING RESOURCES</p>
+                                <div style={styles.spacer} />
+                                <p>
+                                    {loaded}/{toLoad === 0 ? '-' : toLoad} (
+                                    {Math.round(progress * 100)}%)
+                                </p>
+                                <div style={styles.spacer} />
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'flex-end',
+                                        gap: 8,
+                                    }}
+                                >
+                                    <p>Please wait</p>
+                                    <span style={styles.dogLoader}>{computerSequence}</span>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <p>Daniel Cook Portfolio Showcase</p>
+                                {mobileWarning && (
+                                    <>
+                                        <br />
+                                        <b>
+                                            <p style={styles.warning}>
+                                                Mobile device detected. For the best experience,
+                                                click SCREEN ONLY.
+                                            </p>
+                                        </b>
+                                        <br />
+                                    </>
+                                )}
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'flex-end',
+                                        gap: 8,
+                                        marginTop: '4px',
+                                    }}
+                                >
+                                    <p>Click start to begin</p>
+                                    <span style={styles.dogLoader}>{computerSequence}</span>
+                                </div>
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        marginTop: '16px',
+                                    }}
+                                >
+                                    <div className="bios-start-button" onClick={start}>
+                                        <p>START</p>
+                                    </div>
+                                    <div
+                                        className="bios-start-button"
+                                        style={{ marginLeft: '12px' }}
+                                        onClick={() =>
+                                            (window.location.href =
+                                                'https://danos-website-gsxi.vercel.app/')
+                                        }
+                                    >
+                                        <p>SCREEN ONLY</p>
+                                    </div>
+                                </div>
                             </>
                         )}
-                        <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'flex-end',
-                                gap: 8,
-                                marginTop: '4px',
-                            }}
-                        >
-                            <p>Click start to begin</p>
-                            <span style={styles.dogLoader}>{computerSequence}</span>
-                        </div>
-                        <div
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                marginTop: '16px',
-                            }}
-                        >
-                            <div className="bios-start-button" onClick={start}>
-                                <p>START</p>
-                            </div>
-                            <div
-                                className="bios-start-button"
-                                style={{ marginLeft: '12px' }}
-                                onClick={() =>
-                                    (window.location.href =
-                                        'https://danos-website-gsxi.vercel.app/')
-                                }
-                            >
-                                <p>SCREEN ONLY</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             )}
