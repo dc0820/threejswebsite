@@ -6,7 +6,6 @@ import InfoOverlay from './InfoOverlay';
 interface InterfaceUIProps {}
 
 const InterfaceUI: React.FC<InterfaceUIProps> = ({}) => {
-    const [initLoad, setInitLoad] = useState(true);
     const [visible, setVisible] = useState(false);
     const [loading, setLoading] = useState(true);
     const interfaceRef = useRef<HTMLDivElement>(null);
@@ -14,6 +13,7 @@ const InterfaceUI: React.FC<InterfaceUIProps> = ({}) => {
     useEffect(() => {
         UIEventBus.on('loadingScreenDone', () => {
             setLoading(false);
+            setVisible(true);
         });
 
         // find element by id and set ref
@@ -24,24 +24,9 @@ const InterfaceUI: React.FC<InterfaceUIProps> = ({}) => {
         }
     }, []);
 
-    const initMouseDownHandler = () => {
-        setVisible(true);
-        setInitLoad(false);
-    };
-
-    useEffect(() => {
-        if (!loading && initLoad) {
-            document.addEventListener('mousedown', initMouseDownHandler);
-            return () => {
-                document.removeEventListener('mousedown', initMouseDownHandler);
-            };
-        }
-    }, [loading, initLoad]);
-
     useEffect(() => {
         UIEventBus.on('enterMonitor', () => {
             setVisible(false);
-            setInitLoad(false);
             if (interfaceRef.current) {
                 interfaceRef.current.style.pointerEvents = 'none';
             }
