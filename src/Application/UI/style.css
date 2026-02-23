@@ -146,6 +146,305 @@ br {
     padding-bottom: 64px;
 }
 
+.bios-parallax-shell {
+    --parallax-x: 0;
+    --parallax-y: 0;
+}
+
+.bios-depth-layer,
+.bios-crt-scanlines,
+.bios-noise-overlay,
+.bios-vignette-overlay {
+    position: absolute;
+    inset: -8%;
+    pointer-events: none;
+}
+
+.bios-depth-layer {
+    opacity: 0.45;
+    mix-blend-mode: screen;
+}
+
+.bios-depth-layer-far {
+    z-index: 1;
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            rgba(18, 176, 196, 0.03) 0px,
+            rgba(18, 176, 196, 0.03) 1px,
+            transparent 1px,
+            transparent 4px
+        ),
+        radial-gradient(circle at 25% 20%, rgba(0, 255, 255, 0.08), transparent 45%),
+        radial-gradient(circle at 78% 76%, rgba(43, 106, 255, 0.07), transparent 40%);
+    transform: translate3d(
+        calc(var(--parallax-x) * -12px),
+        calc(var(--parallax-y) * -12px),
+        0
+    );
+    animation: biosFloatFar 14s ease-in-out infinite alternate;
+}
+
+.bios-depth-layer-mid {
+    z-index: 2;
+    background-image:
+        repeating-linear-gradient(
+            90deg,
+            rgba(151, 247, 255, 0.06) 0px,
+            rgba(151, 247, 255, 0.06) 1px,
+            transparent 1px,
+            transparent 6px
+        ),
+        linear-gradient(125deg, rgba(0, 255, 247, 0.06), transparent 40%);
+    transform: translate3d(
+        calc(var(--parallax-x) * -22px),
+        calc(var(--parallax-y) * -22px),
+        0
+    );
+    animation: biosFloatMid 9s ease-in-out infinite alternate;
+}
+
+.bios-depth-layer-near {
+    z-index: 3;
+    background-image: linear-gradient(
+        150deg,
+        rgba(0, 255, 255, 0.08) 0%,
+        transparent 35%,
+        rgba(123, 246, 255, 0.06) 70%,
+        transparent 100%
+    );
+    transform: translate3d(
+        calc(var(--parallax-x) * -34px),
+        calc(var(--parallax-y) * -34px),
+        0
+    );
+    animation: biosFloatNear 7s ease-in-out infinite alternate;
+}
+
+.bios-crt-scanlines {
+    z-index: 4;
+    background-image: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.05) 0px,
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    opacity: 0.25;
+    animation: scanlineDrift 10s linear infinite;
+}
+
+.bios-noise-overlay {
+    z-index: 5;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.06) 0.5px, transparent 0.5px);
+    background-size: 3px 3px;
+    opacity: 0.12;
+    animation: screenNoise 0.25s steps(2, end) infinite;
+}
+
+.bios-vignette-overlay {
+    z-index: 6;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+.loading-screen-overlay-text {
+    width: 100%;
+    height: 100%;
+}
+
+.bios-computer-stage {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translate3d(
+            calc(var(--parallax-x) * 22px),
+            calc(var(--parallax-y) * 14px),
+            0
+        )
+        rotateX(calc(var(--parallax-y) * -1.8deg))
+        rotateY(calc(var(--parallax-x) * 2.2deg));
+    transform-style: preserve-3d;
+    transition: transform 120ms linear;
+}
+
+.bios-computer-frame {
+    position: relative;
+    width: min(1100px, 86vw);
+    height: min(760px, 82vh);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bios-computer-shadow {
+    position: absolute;
+    width: min(900px, 72vw);
+    height: min(180px, 16vh);
+    border-radius: 50%;
+    filter: blur(18px);
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 70%);
+    transform: translateY(min(300px, 30vh));
+}
+
+.bios-screen-bezel {
+    width: 100%;
+    height: min(650px, 68vh);
+    background: linear-gradient(160deg, #c7c8c9 0%, #93979d 30%, #8f9399 100%);
+    border: 10px solid #73777d;
+    border-radius: 18px;
+    box-shadow:
+        inset 0 0 0 3px #d6d8db,
+        inset 0 -14px 24px rgba(0, 0, 0, 0.35),
+        0 22px 40px rgba(0, 0, 0, 0.45);
+    padding: clamp(12px, 1.6vw, 18px);
+}
+
+.bios-screen-glass {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 40% 20%, rgba(16, 27, 31, 0.85), #020708 75%);
+    border: 8px solid #1f2428;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.bios-screen-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        140deg,
+        rgba(255, 255, 255, 0.16) 0%,
+        rgba(255, 255, 255, 0.03) 16%,
+        transparent 38%,
+        transparent 100%
+    );
+    z-index: 11;
+}
+
+.bios-computer-neck {
+    width: clamp(130px, 13vw, 160px);
+    height: clamp(20px, 2.2vh, 28px);
+    margin-top: 14px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #9ca1a8 0%, #737982 100%);
+    box-shadow: inset 0 2px 2px rgba(255, 255, 255, 0.35);
+}
+
+.bios-computer-base {
+    width: clamp(430px, 38vw, 520px);
+    height: clamp(68px, 7vh, 86px);
+    margin-top: 10px;
+    border-radius: 20px;
+    background: linear-gradient(180deg, #b0b5bc 0%, #858b94 75%);
+    box-shadow:
+        inset 0 3px 3px rgba(255, 255, 255, 0.35),
+        inset 0 -6px 8px rgba(0, 0, 0, 0.25);
+}
+
+.bios-keyboard {
+    width: clamp(520px, 48vw, 640px);
+    height: clamp(30px, 3.2vh, 40px);
+    margin-top: 22px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #d2d5da 0%, #8f9399 100%);
+    box-shadow: 0 7px 10px rgba(0, 0, 0, 0.35);
+}
+
+.bios-screen-glass .loading-screen-header {
+    padding: clamp(16px, 1.9vw, 24px);
+}
+
+.bios-screen-glass .loading-screen-body {
+    padding-left: clamp(16px, 1.9vw, 24px);
+    padding-right: clamp(16px, 1.9vw, 24px);
+}
+
+.bios-screen-glass .loading-screen-footer {
+    padding: clamp(16px, 1.9vw, 24px);
+    padding-bottom: clamp(20px, 2.4vw, 30px);
+}
+
+.bios-screen-glass p {
+    font-size: clamp(11px, 0.9vw, 16px);
+}
+
+@keyframes biosFloatFar {
+    from {
+        transform: translate3d(
+            calc(var(--parallax-x) * -12px),
+            calc(var(--parallax-y) * -12px),
+            0
+        );
+    }
+    to {
+        transform: translate3d(
+            calc(var(--parallax-x) * -12px),
+            calc(var(--parallax-y) * -12px - 14px),
+            0
+        );
+    }
+}
+
+@keyframes biosFloatMid {
+    from {
+        transform: translate3d(
+            calc(var(--parallax-x) * -22px),
+            calc(var(--parallax-y) * -22px),
+            0
+        );
+    }
+    to {
+        transform: translate3d(
+            calc(var(--parallax-x) * -22px + 10px),
+            calc(var(--parallax-y) * -22px - 10px),
+            0
+        );
+    }
+}
+
+@keyframes biosFloatNear {
+    from {
+        transform: translate3d(
+            calc(var(--parallax-x) * -34px),
+            calc(var(--parallax-y) * -34px),
+            0
+        );
+    }
+    to {
+        transform: translate3d(
+            calc(var(--parallax-x) * -34px - 8px),
+            calc(var(--parallax-y) * -34px + 12px),
+            0
+        );
+    }
+}
+
+@keyframes scanlineDrift {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 0 120px;
+    }
+}
+
+@keyframes screenNoise {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        transform: translate3d(-1px, 1px, 0);
+    }
+}
+
 .info-wrapper {
     top: 64px;
     left: 64px;
@@ -181,5 +480,59 @@ br {
     .loading-screen-footer {
         padding: 16px;
         padding-bottom: 32px;
+    }
+
+    .bios-depth-layer-far {
+        transform: translate3d(
+            calc(var(--parallax-x) * -8px),
+            calc(var(--parallax-y) * -8px),
+            0
+        );
+    }
+
+    .bios-depth-layer-mid {
+        transform: translate3d(
+            calc(var(--parallax-x) * -14px),
+            calc(var(--parallax-y) * -14px),
+            0
+        );
+    }
+
+    .bios-depth-layer-near {
+        transform: translate3d(
+            calc(var(--parallax-x) * -20px),
+            calc(var(--parallax-y) * -20px),
+            0
+        );
+    }
+
+    .bios-computer-stage {
+        transform: none;
+    }
+
+    .bios-computer-frame {
+        width: 96vw;
+        height: 92vh;
+    }
+
+    .bios-screen-bezel {
+        height: 76vh;
+        border-width: 6px;
+        padding: 8px;
+    }
+
+    .bios-screen-glass p {
+        font-size: 10px;
+    }
+
+    .bios-computer-base {
+        width: 74vw;
+        height: 44px;
+    }
+
+    .bios-keyboard {
+        width: 82vw;
+        height: 22px;
+        margin-top: 10px;
     }
 }
