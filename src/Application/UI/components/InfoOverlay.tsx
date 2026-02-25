@@ -159,8 +159,8 @@ const styles: StyleSheetCSS = {
         boxSizing: 'border-box',
     },
     text: {
-        color: '#e9ffff',
-        textShadow: '0 0 8px rgba(119, 255, 255, 0.28)',
+        color: '#ffffff',
+        textShadow: '0 0 8px rgba(255, 255, 255, 0.18)',
         letterSpacing: 0.9,
     },
     wrapper: {

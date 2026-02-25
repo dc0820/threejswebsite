@@ -8,6 +8,7 @@ import CoffeeSteam from './CoffeeSteam';
 import Cursor from './Cursor';
 import Hitboxes from './Hitboxes';
 import AudioManager from '../Audio/AudioManager';
+import RubiksCube from './RubiksCube';
 import * as THREE from 'three';
 export default class World {
     application: Application;
@@ -22,6 +23,7 @@ export default class World {
     coffeeSteam: CoffeeSteam;
     cursor: Cursor;
     audioManager: AudioManager;
+    rubiksCube: RubiksCube;
 
     constructor() {
         this.application = new Application();
@@ -33,6 +35,7 @@ export default class World {
             this.environment = new Environment();
             this.decor = new Decor();
             this.computerSetup = new ComputerSetup();
+            this.rubiksCube = new RubiksCube();
             this.monitorScreen = new MonitorScreen();
             this.coffeeSteam = new CoffeeSteam();
             this.audioManager = new AudioManager();

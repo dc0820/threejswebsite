@@ -35,6 +35,11 @@ const sources: Resource[] = [
         path: 'models/Decor/baked_decor_modified.jpg',
     },
     {
+        name: 'rubiksCubeModel',
+        type: 'gltfModel',
+        path: 'models/rubiks_cube/scene.gltf',
+    },
+    {
         name: 'monitorSmudgeTexture',
         type: 'texture',
         path: 'textures/monitor/layers/compressed/smudges.jpg',
