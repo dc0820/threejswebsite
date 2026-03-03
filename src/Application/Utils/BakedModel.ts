@@ -5,7 +5,12 @@ export default class BakedModel {
     texture: LoadedTexture;
     material: THREE.MeshBasicMaterial;
 
-    constructor(model: LoadedModel, texture: LoadedTexture, scale?: number) {
+    constructor(
+        model: LoadedModel,
+        texture: LoadedTexture,
+        scale?: number,
+        tint?: THREE.ColorRepresentation
+    ) {
         this.model = model;
         this.texture = texture;
 
@@ -14,6 +19,7 @@ export default class BakedModel {
 
         this.material = new THREE.MeshBasicMaterial({
             map: this.texture,
+            color: tint ?? 0xffffff,
         });
 
         this.model.scene.traverse((child) => {

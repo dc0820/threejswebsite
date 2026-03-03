@@ -15,7 +15,7 @@ export default class Environment {
         this.application = new Application();
         this.scene = this.application.scene;
         this.resources = this.application.resources;
-        this.hologramColor = new THREE.Color('#59fff4');
+        this.hologramColor = new THREE.Color('#7fffee');
 
         this.bakeModel();
         this.setModel();
@@ -26,7 +26,8 @@ export default class Environment {
         this.bakedModel = new BakedModel(
             this.resources.items.gltfModel.environmentModel,
             this.resources.items.texture.environmentTexture,
-            900
+            900,
+            '#a6bbdd'
         );
     }
 
@@ -87,7 +88,7 @@ export default class Environment {
                 const source = material as THREE.MeshStandardMaterial;
                 const tintedColor = (source.color ?? new THREE.Color(0xffffff))
                     .clone()
-                    .lerp(this.hologramColor, 0.43);
+                    .lerp(this.hologramColor, 0.58);
 
                 return new THREE.MeshBasicMaterial({
                     map: source.map ?? null,
