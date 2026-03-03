@@ -21,7 +21,7 @@ export default class RubiksCube {
         if (!rubiksCubeModel) return;
 
         this.model = rubiksCubeModel.scene;
-        this.model.scale.setScalar(1750);
+        this.model.scale.setScalar(1500);
         this.model.rotation.set(0, -Math.PI * 0.16, 0);
 
         this.applyUnlitTextureMaterials();
