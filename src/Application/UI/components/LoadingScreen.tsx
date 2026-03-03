@@ -5,16 +5,12 @@ type LoadingProps = {};
 
 const LoadingScreen: React.FC<LoadingProps> = () => {
     const [overlayOpacity, setLoadingOverlayOpacity] = useState(1);
-    const [progress, setProgress] = useState(0);
-    const [loaded, setLoaded] = useState(0);
-    const [toLoad, setToLoad] = useState(0);
     const [showStartPrompt, setShowStartPrompt] = useState(false);
     const [firefoxPopupOpacity, setFirefoxPopupOpacity] = useState(0);
     const [webGLErrorOpacity, setWebGLErrorOpacity] = useState(0);
     const [firefoxError, setFirefoxError] = useState(false);
     const [webGLError, setWebGLError] = useState(false);
     const [mobileWarning, setMobileWarning] = useState(window.innerWidth < 768);
-    const [computerStep, setComputerStep] = useState(0);
 
     const onResize = () => {
         setMobileWarning(window.innerWidth < 768);
@@ -39,21 +35,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
     }, []);
 
     useEffect(() => {
-        const interval = window.setInterval(() => {
-            setComputerStep((previous) => (previous + 1) % 4);
-        }, 450);
-
-        return () => {
-            window.clearInterval(interval);
-        };
-    }, []);
-
-    useEffect(() => {
         eventBus.on('loadedSource', (data) => {
-            setProgress(data.progress);
-            setLoaded(data.loaded);
-            setToLoad(data.toLoad);
-
             if (data.progress >= 1) {
                 setTimeout(() => {
                     setShowStartPrompt(true);
@@ -96,8 +78,6 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
         return !!(gl && gl instanceof WebGLRenderingContext);
     };
 
-    const computerSequence = '💻'.repeat(computerStep);
-
     return (
         <div
             style={Object.assign({}, styles.overlay, {
@@ -106,82 +86,101 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
             })}
         >
             {!firefoxError && !webGLError && (
-                <div style={Object.assign({}, styles.popupContainer, { opacity: 1 })}>
-                    <div style={styles.startPopup}>
-                        {!showStartPrompt ? (
-                            <>
-                                <p>LOADING RESOURCES</p>
-                                <div style={styles.spacer} />
-                                <p>
-                                    {loaded}/{toLoad === 0 ? '-' : toLoad} (
-                                    {Math.round(progress * 100)}%)
-                                </p>
-                                <div style={styles.spacer} />
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'flex-end',
-                                        gap: 8,
-                                    }}
-                                >
-                                    <p>Please wait</p>
-                                    <span style={styles.dogLoader}>{computerSequence}</span>
+                <>
+                    <div className="truck-loader-screen">
+                        <div className="container">
+                            <div className="truckWrapper">
+                                <div className="lampPost">
+                                    <div className="lampHead" />
+                                    <div className="lampLight" />
+                                    <div className="lightBeam" />
+                                    <div className="lampBase" />
+                                    <div className="questionDot" />
                                 </div>
-                            </>
-                        ) : (
-                            <>
-                                <p>Daniel Cook Portfolio Showcase</p>
-                                {mobileWarning && (
-                                    <>
-                                        <br />
-                                        <b>
-                                            <p style={styles.warning}>
-                                                Mobile device detected. For the best experience,
-                                                click SCREEN ONLY.
-                                            </p>
-                                        </b>
-                                        <br />
-                                    </>
-                                )}
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'flex-end',
-                                        gap: 8,
-                                        marginTop: '4px',
-                                    }}
-                                >
-                                    <p>Click start to begin</p>
-                                    <span style={styles.loadingCursor}>
-                                        <span className="blinking-cursor" />
-                                    </span>
+
+                                <div className="truckBody">
+                                    <div className="truckCab" />
+                                    <div className="truckTrailer" />
+                                    <div className="truckCargo">
+                                        <div className="truckCargo-inner" />
+                                    </div>
+                                    <div className="truckWindow">
+                                        <div className="truckWindow-inner" />
+                                    </div>
+                                    <div className="truckHeadlight" />
+                                    <div className="truckOpener" />
+                                    <div className="truckExhaust" />
+                                    <div className="truckTires">
+                                        <div className="tire">
+                                            <div className="tire-inner" />
+                                        </div>
+                                        <div className="tire">
+                                            <div className="tire-inner" />
+                                        </div>
+                                    </div>
                                 </div>
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        marginTop: '16px',
-                                    }}
-                                >
-                                    <div className="bios-start-button" onClick={start}>
-                                        <p>START</p>
+
+                                <div className="road" />
+                            </div>
+                        </div>
+                    </div>
+                    {showStartPrompt && (
+                        <div style={styles.startPromptLayer}>
+                            <div style={Object.assign({}, styles.startPopup, styles.startPopupGlass)}>
+                                <>
+                                    <p>Daniel Cook Portfolio Showcase</p>
+                                    {mobileWarning && (
+                                        <>
+                                            <br />
+                                            <b>
+                                                <p style={styles.warning}>
+                                                    Mobile device detected. For the best experience,
+                                                    click SCREEN ONLY.
+                                                </p>
+                                            </b>
+                                            <br />
+                                        </>
+                                    )}
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'flex-end',
+                                            gap: 8,
+                                            marginTop: '4px',
+                                        }}
+                                    >
+                                        <p>Click start to begin</p>
+                                        <span style={styles.loadingCursor}>
+                                            <span className="blinking-cursor" />
+                                        </span>
                                     </div>
                                     <div
-                                        className="bios-start-button"
-                                        style={{ marginLeft: '12px' }}
-                                        onClick={() =>
-                                            (window.location.href =
-                                                'https://danos-website-gsxi.vercel.app/')
-                                        }
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            marginTop: '16px',
+                                        }}
                                     >
-                                        <p>SCREEN ONLY</p>
+                                        <div className="bios-start-button" onClick={start}>
+                                            <p>START</p>
+                                        </div>
+                                        <div
+                                            className="bios-start-button"
+                                            style={{ marginLeft: '12px' }}
+                                            onClick={() =>
+                                                (window.location.href =
+                                                    'https://danos-website-gsxi.vercel.app/')
+                                            }
+                                        >
+                                            <p>SCREEN ONLY</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                </div>
+                                </>
+                            </div>
+                        </div>
+                    )}
+                </>
             )}
             {firefoxError && (
                 <div
@@ -264,6 +263,17 @@ const styles: StyleSheetCSS = {
         justifyContent: 'center',
         alignItems: 'center',
     },
+    startPromptLayer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        pointerEvents: 'none',
+    },
     startPopup: {
         backgroundColor: '#000',
         padding: 24,
@@ -273,17 +283,15 @@ const styles: StyleSheetCSS = {
         justifyContent: 'center',
         maxWidth: 540,
     },
+    startPopupGlass: {
+        backgroundColor: 'rgba(0, 0, 0, 0.48)',
+        backdropFilter: 'blur(5px)',
+        WebkitBackdropFilter: 'blur(5px)',
+        border: '7px solid rgba(255, 255, 255, 0.92)',
+        pointerEvents: 'auto',
+    },
     warning: {
         color: 'yellow',
-    },
-    dogLoader: {
-        minWidth: 70,
-        minHeight: '1.4em',
-        lineHeight: '1.4em',
-        display: 'inline-flex',
-        alignItems: 'center',
-        textAlign: 'left',
-        letterSpacing: 2,
     },
     loadingCursor: {
         minWidth: 16,
